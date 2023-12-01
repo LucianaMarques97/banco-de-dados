@@ -1,0 +1,29 @@
+CREATE DATABASE Lumodas;
+
+USE Lumodas;
+
+CREATE TABLE Vendas (
+    Venda_id INT PRIMARY KEY,
+    DataVenda DATE NOT NULL,
+    Produto_id INT NOT NULL,
+    Qtd INT NOT NULL
+);
+
+INSERT INTO Vendas (Venda_id, DataVenda, Produto_id, Qtd)
+VALUES
+    (1, '2023-11-10', 093, 50),
+    (2, '2023-11-10', 033, 20),
+    (3, '2023-11-10', 054, 30),
+    (4, '2023-11-10', 028, 25);
+
+DELIMITER //
+CREATE PROCEDURE LevantamentoDiario()
+BEGIN
+    SELECT DataVenda, SUM(Qtd) AS QtdTotal
+    FROM Vendas
+    GROUP BY DataVenda;
+END //
+DELIMITER ;
+
+CALL LevantamentoDiario();
+
