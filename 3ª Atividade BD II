@@ -1,0 +1,28 @@
+Comando:
+Crie um banco de dados, adicione tabelas e determine quais são os atributos de cada uma. Em seguida, execute um trigger que se relacione com algum comando, como insert, select, delete ou update.
+
+
+#RESULTADO
+CREATE DATABASE Escola
+
+USE Escola;
+
+CREATE TABLE Alunos (
+    Aluno_id INT PRIMARY KEY,
+    NomeAluno VARCHAR(30) NOT NULL,
+    AlunoNovo INT DEFAULT 0
+);
+
+CREATE TABLE Turma (
+    Turma_id INT PRIMARY KEY,
+    turmaNumero VARCHAR(3) NOT NULL,
+    Turma_id INT,
+    FOREIGN KEY (Aluno-id) REFERENCES Turma(Turma_id)
+);
+
+CREATE TRIGGER AtualizarAlunos
+AFTER INSERT ON Alunos
+FOR EACH ROW
+UPDATE Alunos
+SET AlunoNovo = AlunoNovo + 1
+WHERE Turma_id = NEW.Turma_id;
